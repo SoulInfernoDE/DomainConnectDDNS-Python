@@ -4,7 +4,7 @@ chardet==4.0.0
 cryptography==3.3.2
 decorator==4.4.2
 dnspython==1.16.0
-domain-connect==0.0.9
+domain-connect==0.0.10
 enum34==1.1.10
 future==0.18.2
 idna==2.10
