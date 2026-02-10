@@ -150,9 +150,7 @@ def main(domain, settings='settings.txt', ignore_previous_ip=False):
             # could not get valid external IP for protocol (may be temporary)!
             # if whe still have an ip in the config, use it so to make best effort update
             # (for example new v4 even if v6 cannot be read)
-            if 'ip' in config[domain] \
-                    and proto in config[domain]['ip'] \
-                    and config[domain]['ip'][proto]:
+            if 'ip' in config[domain]                     and proto in config[domain]['ip']                     and config[domain]['ip'][proto]:
                 public_ip[proto] = config[domain]['ip'][proto]
                 print("  Fallback to already saved {} address: {}"
                       .format(proto, config[domain]['ip'][proto]))
@@ -164,11 +162,8 @@ def main(domain, settings='settings.txt', ignore_previous_ip=False):
         # check if the previous and actual IP match
         # force update by the flag
         # force update every 7 days to prevent tokens from expire
-        if not ignore_previous_ip \
-                and ('last_success' not in config[domain]
-                     or int(time.time()) - config[domain]['last_success'] < 7 * 24 * 60 * 60) \
-                and proto in ip \
-                and str(ip[proto]) == str(public_ip[proto]):
+        if not ignore_previous_ip                 and ('last_success' not in config[domain]
+                     or int(time.time()) - config[domain]['last_success'] < 7 * 24 * 60 * 60)                 and proto in ip                 and str(ip[proto]) == str(public_ip[proto]):
             config[domain]['ip'][proto] = public_ip[proto]
             print("  {} record up to date.".format(proto))
         else:
@@ -199,6 +194,14 @@ def main(domain, settings='settings.txt', ignore_previous_ip=False):
             client_secret='inconceivable',
             api_url=config[domain]['url_api']
         ))
+
+        # BEGIN workaround for providers returning list instead of dict
+        for field in ['access_token', 'refresh_token', 'iat', 'access_token_expires_in']:
+            value = getattr(context, field, None)
+            if isinstance(value, list) and value:
+                setattr(context, field, value[0])
+        # END workaround
+
         for field in ['access_token', 'refresh_token', 'iat', 'access_token_expires_in']:
             config[domain].update({field: getattr(context, field)})
 
