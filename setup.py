@@ -18,7 +18,7 @@ setup(
     long_description_content_type="text/markdown",
     author = 'Andreea Dima',
     author_email = 'andreea.dima@1and1.ro',
-    url="https://github.com/Domain-Connect/DomainConnectDDNS-Python",
+    url="https://github.com/SoulInfernoDE/DomainConnectDDNS-Python",
     classifiers = [
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 2',
@@ -32,7 +32,7 @@ setup(
         'validators >= 0.12.6',
         'requests >= 2.21.0',
         'dnspython >= 1.15.0',
-        'domain-connect >= 0.0.9',
+        'domain-connect >= 0.0.10',
         'ipaddress >= 1.0.23;python_version<"3.3"',
     ],
     entry_points = {
